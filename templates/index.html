@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор Паролей</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="password-generator">
+        <div class="generator-header">
+            <h1>Генератор Паролей</h1>
+        </div>
+
+        <form method="POST">
+            <div class="generator-settings">
+                <div class="setting-group">
+                    <div class="setting-title">Длина пароля</div>
+                    <div class="range-container">
+                        <input type="range" id="length" name="length"
+                               min="6" max="32" value="15"
+                               oninput="updateValue(this, 'lengthValue')">
+                        <div class="range-value" id="lengthValue">15</div>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-title">Типы символов</div>
+                    <div class="character-types">
+                        <label>
+                            <input type="checkbox" name="use_letters" checked>
+                            Буквы (A-Z, a-z)
+                        </label>
+                        <label>
+                            <input type="checkbox" name="use_digits" checked>
+                            Цифры (0-9)
+                        </label>
+                        <label>
+                            <input type="checkbox" name="use_symbols" checked>
+                            Спец. символы
+                        </label>
+                    </div>
+                </div>
+
+                <div class="setting-group">
+                    <div class="setting-title">Количество паролей</div>
+                    <div class="range-container">
+                        <input type="range" id="count" name="count"
+                               min="1" max="50" value="18"
+                               oninput="updateValue(this, 'countValue')">
+                        <div class="range-value" id="countValue">18</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="generate-btn">Сгенерировать</button>
+            </div>
+        </form>
+
+        <div class="passwords-container">
+            {% if passwords %}
+            <textarea readonly>{% for p in passwords %}{{ p }}
+{% endfor %}</textarea>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        function updateValue(input, displayId) {
+            document.getElementById(displayId).textContent = input.value;
+        }
+    </script>
+</body>
+</html>
